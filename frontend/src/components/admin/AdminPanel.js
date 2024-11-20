@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import './AdminPanel.css';
 
-function AdminPanel({ userInfo }) {  // Make sure userInfo is destructured from props
-  const [users, setUsers] = useState([]); // State to store the fetched users
-  const [loading, setLoading] = useState(true); // State for loading state
-  const [error, setError] = useState(null); // State for error handling
+function AdminPanel({ userInfo }) {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch users data when the AdminPanel component is mounted
   useEffect(() => {
     const fetchUsersData = async () => {
       try {
@@ -13,7 +13,7 @@ function AdminPanel({ userInfo }) {  // Make sure userInfo is destructured from 
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ensure token is passed
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
 
@@ -22,43 +22,41 @@ function AdminPanel({ userInfo }) {  // Make sure userInfo is destructured from 
         }
 
         const data = await response.json();
-        setUsers(data); // Set the fetched users data
+        setUsers(data);
       } catch (error) {
-        setError(error.message); // Set error state
+        setError(error.message);
         console.error('Error fetching users data:', error);
       } finally {
-        setLoading(false); // Set loading to false once the request is complete
+        setLoading(false);
       }
     };
 
     fetchUsersData();
-  }, []); // Empty dependency array to run once when the component is mounted
+  }, []);
 
   if (loading) {
-    return <div>Loading user data...</div>;
+    return <div className="loading admin-panel">Loading user data...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error admin-panel">Error: {error}</div>;
   }
 
   return (
-    <div>
+    <div className="admin-panel">
       <h2>Admin Panel</h2>
       <h3>User List</h3>
-      <ul>
-  {users.length === 0 ? (
-    <li>No users found.</li>
-  ) : (
-    users.map((user, index) => (
-      <li key={`${user.id}-${index}`}> {/* Unique key using both user.id and index */}
-        {user.name} - {user.email}
-      </li>
-    ))
-  )}
-</ul>
-
-
+      <ul className="user-list">
+        {users.length === 0 ? (
+          <li>No users found.</li>
+        ) : (
+          users.map((user, index) => (
+            <li key={`${user.id}-${index}`}>
+              <span>{user.name}</span> - {user.email}
+            </li>
+          ))
+        )}
+      </ul>
     </div>
   );
 }

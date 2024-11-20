@@ -1,0 +1,108 @@
+/* Header Styles */
+header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+    padding: 1rem 0;
+  }
+  
+  header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  header hr {
+    margin: 0.5rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  
+  header strong {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .navbar .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .navbar .nav-link {
+    font-size: 1rem;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .navbar .nav-link:hover {
+    color: #007bff;
+  }
+  
+  .navbar .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .navbar .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+  }
+  
+  .navbar .btn-danger:hover {
+    background-color: #b52b37;
+  }
+  
+  /* User Email */
+  header .text-primary {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    header h1 {
+      font-size: 1.5rem;
+    }
+  
+    .navbar .navbar-nav {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    .navbar .btn {
+      font-size: 0.8rem;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  

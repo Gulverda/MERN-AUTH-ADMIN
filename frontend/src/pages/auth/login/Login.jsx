@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
   const [formsData, setFormData] = useState({
@@ -70,7 +71,8 @@ const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
   }
 
   return (
-    <div>
+    <div className="login">
+      <div className="login_form">
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -97,6 +99,7 @@ const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
         </div>
         <button type="submit" className="btn btn-primary">Login</button>
       </form>
+      </div>
     </div>
   );
 };

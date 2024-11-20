@@ -1,38 +1,143 @@
-.App {
-  text-align: center;
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Roboto', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Header Styling */
+header {
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
 }
 
-.App-link {
-  color: #61dafb;
+/* Brand Section */
+header .brand-section h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand a{
+  font-size: 1.5rem;
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-nav.nav-active {
+  transform: translateX(0);
+}
+
+.navbar .nav-item .nav-link {
+  font-size: 1rem;
+  color: #555;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-item .nav-link:hover {
+  color: #007bff;
+}
+
+.navbar .user-email {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.navbar .btn-logout {
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .btn-logout:hover {
+  background-color: #b52b37;
+}
+
+/* Burger Menu */
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.burger-menu .burger-bar {
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-nav {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    background-color: #fff;
+    flex-direction: column;
+    width: 200px;
+    height: 100vh;
+    transform: translateX(100%);
+    box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+    padding-top: 2rem;
+    z-index: 100;
   }
-  to {
-    transform: rotate(360deg);
+
+  .burger-menu {
+    display: flex;
+  }
+
+  .navbar-nav.nav-active {
+    transform: translateX(0);
+  }
+
+  .nav-item {
+    margin-bottom: 1rem;
+  }
+
+  .navbar-brand {
+    margin-bottom: 1rem;
   }
 }
