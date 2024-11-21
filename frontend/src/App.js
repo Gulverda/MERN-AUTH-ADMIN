@@ -31,7 +31,7 @@ function App() {
 
   const fetchAdminData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/admin/users', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
