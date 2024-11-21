@@ -31,7 +31,7 @@ function App() {
 
   const fetchAdminData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/admin/users', {
+      const response = await fetch('https://mern-auth-admin.onrender.com/admin/users', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
