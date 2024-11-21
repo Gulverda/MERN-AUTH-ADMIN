@@ -21,9 +21,9 @@ const __dirname = path.resolve();
 app.use(bodyParser.json());
 // Allow requests from specific origins
 app.use(cors({
-    origin: "*", // Allow all origins
-    credentials: true // Allow cookies if needed
-  }));
+    origin: ["http://localhost:3000", "https://your-frontend-on-render.com"], // Add your frontend URL
+    credentials: true, // Allow cookies if needed
+}));
 
 // MongoDB Connection
 mongoose
