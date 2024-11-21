@@ -19,7 +19,11 @@ const __dirname = path.resolve();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+// Allow requests from specific origins
+app.use(cors({
+    origin: "*", // Allow all origins
+    credentials: true // Allow cookies if needed
+  }));
 
 // MongoDB Connection
 mongoose
