@@ -38,8 +38,7 @@ function App() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      
-  
+
       // Check if the response is OK
       if (response.ok) {
         const data = await response.json();
@@ -52,7 +51,6 @@ function App() {
       console.error('Error fetching admin data:', error);
     }
   };
-  
 
   return (
     <>
@@ -63,37 +61,35 @@ function App() {
 
         {/* Admin route */}
         <Route
-  path="/admin"
-  element={
-    isLoggedIn && userRole === 'admin' ? (
-      userInfo ? (
-        <AdminPanel userInfo={userInfo} /> 
-      ) : (
-        <Navigate to="/admin" />
-      )
-    ) : (
-      <Navigate to="/admin" />
-    )
-  }
-/>
+          path="/admin"
+          element={
+            isLoggedIn && userRole === 'admin' ? (
+              userInfo ? (
+                <AdminPanel userInfo={userInfo} /> // Admin panel for admin
+              ) : (
+                <AdminPanel userInfo={userInfo}/> // Show loading if admin data is not yet available
+              )
+            ) : (
+              <Navigate to="/login" /> // Redirect to login if not logged in or not admin
+            )
+          }
+        />
 
-
-        {/* Dashboard route */}
+        {/* User Profile route */}
         <Route
-  path="/dashboard"
-  element={
-    isLoggedIn ? (
-      userRole === 'admin' ? (
-        <Navigate to="/admin" /> // Redirect to admin panel if admin
-      ) : (
-        <div>Hello User! Welcome to your dashboard.</div> // Show user content
-      )
-    ) : (
-      <Navigate to="/admin" />
-    )
-  }
-/>
-
+          path="/profile"
+          element={
+            isLoggedIn ? (
+              userRole === 'admin' ? (
+                <Navigate to="/admin" /> // Redirect to admin panel if admin
+              ) : (
+                <div>Hello User! Welcome to your profile.</div> // Show user profile for regular users
+              )
+            ) : (
+              <Navigate to="/login" /> // Redirect to login if not logged in
+            )
+          }
+        />
       </Routes>
     </>
   );

@@ -46,7 +46,7 @@ const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
         setUserRole(data.role); // Set the user role in state
 
         // Redirect to dashboard
-        navigate('/dashboard');
+        navigate('/profile');
       } else {
         alert('Invalid credentials');
       }

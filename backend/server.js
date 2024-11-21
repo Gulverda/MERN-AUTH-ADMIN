@@ -1,60 +1,70 @@
 import express from 'express';
-import signupRoute from './routes/signup.route.js';
-import loginRoute from './routes/login.route.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import User from './models/user.js'; // Import the User model
-import dotenv from 'dotenv'; // Import dotenv to load environment variables
+import dotenv from 'dotenv';
+import path from 'path';
+
+import signupRoute from './routes/signup.route.js';
+import loginRoute from './routes/login.route.js';
 import createAdminAccount from './scripts/admin.js';
+import User from './models/user.js';
 
-dotenv.config(); // Initialize dotenv to load .env file
+dotenv.config();
 
+// Constants
 const app = express();
-const PORT = process.env.PORT || 5000;  // Use the PORT from the environment variable
+const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
 // Middleware
-app.use(bodyParser.json());  // Parse JSON bodies
-app.use(cors());  // Enable CORS for all requests
+app.use(bodyParser.json());
+app.use(cors());
 
-// Connect to MongoDB using environment variable for URI
-mongoose.connect(process.env.MONGODB_URI, {
+// MongoDB Connection
+mongoose
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-});
+  })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error(`MongoDB connection error: ${err}`));
 
-mongoose.connection.on("connected", () => {
-    console.log("Mongoose is connected!");
-});
-
-mongoose.connection.on("error", (err) => {
-    console.log(`Mongoose connection error: ${err}`);
-});
-
-// Create the admin account if necessary
+// Create admin account on server start
 createAdminAccount();
 
-// Define your routes
-app.use('/user', signupRoute);  // Forward /user/register to signupRoute
-app.use('/auth', loginRoute);  // Forward /user/login to loginRoute
+// Routes
+app.use('/user', signupRoute);
+app.use('/auth', loginRoute);
 
+// Admin route to fetch all users
 app.get('/admin/users', async (req, res) => {
   try {
-      const users = await User.find(); // Fetch all users from the database
-      res.json(users);  // Send the list of users as a JSON response
+    const users = await User.find();
+    res.status(200).json(users);
   } catch (error) {
-      console.error('Error fetching users:', error); // Log the error to the console
-      res.status(500).send('Error fetching users'); // Respond with error status
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Error fetching users' });
   }
 });
 
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontend', 'build')));
 
-// Catch-all 404 handler for undefined routes
-app.use('*', (req, res) => {
-    res.status(404).send('Route not found!');
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+  });
+} else {
+  console.log('Running in development mode');
+}
+
+// Fallback for unmatched routes
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
 });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on: http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
