@@ -21,9 +21,11 @@ const __dirname = path.resolve();
 app.use(bodyParser.json());
 // Allow requests from specific origins
 app.use(cors({
-    origin: ["http://localhost:3000", "https://your-frontend-on-render.com"], // Add your frontend URL
-    credentials: true, // Allow cookies if needed
-}));
+    origin: "*", // Replace with your React app's domain
+    methods: ['GET', 'POST'],
+    credentials: true
+  }));
+  
 
 // MongoDB Connection
 mongoose
