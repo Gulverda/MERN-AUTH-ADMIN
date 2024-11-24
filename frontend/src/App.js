@@ -40,19 +40,22 @@ function App() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
-
-      // Check if the response is OK
-      if (response.ok) {
-        const data = await response.json();
-        setUserInfo(data); // Set the data for admin
-      } else {
-        const errorMessage = await response.text(); // Get the error text
-        console.error('Failed to fetch admin data:', errorMessage);
+  
+      // Check if the response is OK (status 200-299)
+      if (!response.ok) {
+        const errorText = await response.text(); // Read the HTML error page content
+        console.error('Error fetching admin data:', errorText);
+        throw new Error(`Failed to fetch data: ${response.status} - ${response.statusText}`);
       }
+  
+      // If the response is OK, parse the JSON
+      const data = await response.json();
+      setUserInfo(data); // Set the data for admin
     } catch (error) {
       console.error('Error fetching admin data:', error);
     }
   };
+  
 
   return (
     <>
