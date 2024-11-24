@@ -122,7 +122,6 @@ header .brand-section h1 {
     width: 200px;
     height: 100vh;
     transform: translateX(100%);
-    box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     z-index: 100;
   }
