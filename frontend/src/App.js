@@ -15,13 +15,12 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const email = localStorage.getItem('userEmail');
-    const role = localStorage.getItem('userRole');
-
-    if (token && email && role) {
+    if (token) {
       setIsLoggedIn(true);
-      setUserEmail(email);
-      setUserRole(role);
+      const email = localStorage.getItem('userEmail');
+      const role = localStorage.getItem('userRole');
+      if (email) setUserEmail(email);
+      if (role) setUserRole(role);
       console.log('User Role:', role); // Check the role here
 
       // Fetch additional user data if the user is an admin
@@ -40,22 +39,19 @@ function App() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
-  
-      // Check if the response is OK (status 200-299)
-      if (!response.ok) {
-        const errorText = await response.text(); // Read the HTML error page content
-        console.error('Error fetching admin data:', errorText);
-        throw new Error(`Failed to fetch data: ${response.status} - ${response.statusText}`);
+
+      // Check if the response is OK
+      if (response.ok) {
+        const data = await response.json();
+        setUserInfo(data); // Set the data for admin
+      } else {
+        const errorMessage = await response.text(); // Get the error text
+        console.error('Failed to fetch admin data:', errorMessage);
       }
-  
-      // If the response is OK, parse the JSON
-      const data = await response.json();
-      setUserInfo(data); // Set the data for admin
     } catch (error) {
       console.error('Error fetching admin data:', error);
     }
   };
-  
 
   return (
     <>
@@ -72,7 +68,7 @@ function App() {
               userInfo ? (
                 <AdminPanel userInfo={userInfo} /> // Admin panel for admin
               ) : (
-                <div>Loading admin data...</div> // Show loading if admin data is not yet available
+                <AdminPanel userInfo={userInfo}/> // Show loading if admin data is not yet available
               )
             ) : (
               <Navigate to="/login" /> // Redirect to login if not logged in or not admin
