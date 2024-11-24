@@ -39,6 +39,8 @@ header .brand-section h1 {
 .navbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .navbar-brand a{

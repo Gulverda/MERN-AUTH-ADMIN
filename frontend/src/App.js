@@ -5,6 +5,7 @@ import Signup from './pages/auth/signup/Signup';
 import AdminPanel from './components/admin/AdminPanel'; // Admin Panel component
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
