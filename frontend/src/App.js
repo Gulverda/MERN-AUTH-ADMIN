@@ -15,12 +15,13 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    const email = localStorage.getItem('userEmail');
+    const role = localStorage.getItem('userRole');
+
+    if (token && email && role) {
       setIsLoggedIn(true);
-      const email = localStorage.getItem('userEmail');
-      const role = localStorage.getItem('userRole');
-      if (email) setUserEmail(email);
-      if (role) setUserRole(role);
+      setUserEmail(email);
+      setUserRole(role);
       console.log('User Role:', role); // Check the role here
 
       // Fetch additional user data if the user is an admin
@@ -68,7 +69,7 @@ function App() {
               userInfo ? (
                 <AdminPanel userInfo={userInfo} /> // Admin panel for admin
               ) : (
-                <AdminPanel userInfo={userInfo}/> // Show loading if admin data is not yet available
+                <div>Loading admin data...</div> // Show loading if admin data is not yet available
               )
             ) : (
               <Navigate to="/login" /> // Redirect to login if not logged in or not admin
