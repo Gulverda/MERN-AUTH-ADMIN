@@ -22,14 +22,12 @@ const Signup = () => {
         e.preventDefault()
         // console.log(formsData)
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/register`, {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formsData),
-                credentials: 'include', // Required for cookies or session authentication
-              });
+            });
+            
               
             const data = await response.json()
             console.log(data)
