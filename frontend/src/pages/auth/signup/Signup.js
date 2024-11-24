@@ -1,64 +1,107 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import './Signup.css'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Container,
+  Paper,
+} from '@mui/material';
 
 const Signup = () => {
-    const navigate = useNavigate();
-    const[formsData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: ''
-    })
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formsData,
-            [e.target.name]: e.target.value
-        })
-    }
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        // console.log(formsData)
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formsData),
-            });
-            
-              
-            const data = await response.json()
-            console.log(data)
-            navigate('/login')
-        } catch (error) {
-            console.log(error)
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/user/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        navigate('/login');
+      } else {
+        alert(data.message || 'Registration failed.');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      alert('An error occurred. Please try again.');
     }
-    
+  };
+
   return (
-    <div className="signUp">
-      <div className="singUp_form">
-      <h1>Sign Up</h1>
-        <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-            <label htmlFor="name" className="form-label">Name</label>
-            <input type="text" className="form-control" id="name" name="name" value={formsData.name} onChange={handleChange} />
-            </div>
-            <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email address</label>
-            <input type="email" className="form-control" id="email" name="email" value={formsData.email} onChange={handleChange} />
-            </div>
-            <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" className="form-control" id="password" name="password" value={formsData.password} onChange={handleChange} />
-            </div>
-            <button type="submit" className="btn btn-primary">Sign Up</button>
-        </form>
-      </div>
-    </div>
-  )
-}
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
+        <Typography variant="h4" component="h1" gutterBottom align="center">
+          Sign Up
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          <TextField
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
+          <TextField
+            label="Email Address"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
+          <TextField
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            Sign Up
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
+  );
+};
 
-export default Signup
+export default Signup;

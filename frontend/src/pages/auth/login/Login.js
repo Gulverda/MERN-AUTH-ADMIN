@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Container,
+  Paper,
+} from '@mui/material';
 
 const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -28,7 +35,6 @@ const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
         body: JSON.stringify(formData),
         credentials: 'include', // Required for cookies or session authentication
       });
-      
 
       const data = await response.json();
 
@@ -70,44 +76,50 @@ const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
   }
 
   return (
-    <div className="login">
-      <div className="login_form">
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="form-control"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
+        <Typography variant="h4" component="h1" gutterBottom align="center">
+          Login
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          <TextField
+            label="Email Address"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
+          <TextField
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
             Login
-          </button>
-        </form>
-      </div>
-    </div>
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 
