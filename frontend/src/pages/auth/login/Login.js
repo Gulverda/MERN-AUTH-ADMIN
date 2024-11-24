@@ -67,12 +67,13 @@ const Login = ({ setIsLoggedIn, setUserEmail, setUserRole, isLoggedIn }) => {
       setIsLoggedIn(true);
       setUserEmail(localStorage.getItem('userEmail'));
       setUserRole(localStorage.getItem('userRole'));
+      navigate('/profile'); // Automatically navigate to profile if already logged in
     }
-  }, [setIsLoggedIn, setUserEmail, setUserRole]);
+  }, [setIsLoggedIn, setUserEmail, setUserRole, navigate]);
 
-  // Redirect if already logged in
+  // Do not render the login form if already logged in
   if (isLoggedIn) {
-    return <div>You are already logged in. Redirecting to the dashboard...</div>;
+    return null; // Or just return <></> to render nothing
   }
 
   return (
