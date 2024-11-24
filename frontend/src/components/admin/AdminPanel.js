@@ -9,18 +9,18 @@ function AdminPanel({ userInfo }) {
   useEffect(() => {
     const fetchUsersData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/admin/users`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
-
+  
         if (!response.ok) {
-          throw new Error(`Failed to fetch users: ${response.statusText}`);
+          throw new Error(`Failed to fetch users: ${response.status} - ${response.statusText}`);
         }
-
+  
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -30,9 +30,10 @@ function AdminPanel({ userInfo }) {
         setLoading(false);
       }
     };
-
+  
     fetchUsersData();
   }, []);
+  
 
   if (loading) {
     return <div className="loading admin-panel">Loading user data...</div>;
