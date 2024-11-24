@@ -25,10 +25,12 @@ const Signup = () => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formsData)
-            })
+                body: JSON.stringify(formsData),
+                credentials: 'include', // Required for cookies or session authentication
+              });
+              
             const data = await response.json()
             console.log(data)
             navigate('/login')

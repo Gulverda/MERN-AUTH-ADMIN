@@ -16,16 +16,21 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  'https://https://mern-auth-admin.onrender.com', // Deployed frontend domain
+];
+
 
 // Middleware
 app.use(bodyParser.json());
 // Allow requests from specific origins
 app.use(cors({
-    origin: "*", // Replace with your React app's domain
-    methods: ['GET', 'POST'],
-    credentials: true
-  }));
-  
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow required methods only
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+  credentials: true, // Enable cookies for cross-origin requests (optional)
+}));
 
 // MongoDB Connection
 mongoose
