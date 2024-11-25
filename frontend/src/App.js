@@ -32,6 +32,13 @@ function App() {
 
   const fetchAdminData = async () => {
     try {
+      // const response = await fetch('http://localhost:5000/auth/login', {
+      //   method: 'GET',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      //   },
+      // });
       const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
         method: 'GET',
         headers: {
@@ -39,7 +46,6 @@ function App() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
-
       // Check if the response is OK
       if (response.ok) {
         const data = await response.json();
