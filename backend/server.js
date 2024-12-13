@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 const allowedOrigins = [
   'http://localhost:3000', // Local development
-  'https://https://mern-auth-admin.onrender.com', // Deployed frontend domain
+  'https://https://mern-auth-admin.onrender.com/api', // Deployed frontend domain
 ];
 
 
